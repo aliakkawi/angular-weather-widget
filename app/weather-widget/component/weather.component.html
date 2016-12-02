@@ -1,0 +1,62 @@
+<div class="card" [ngStyle]="setStyles()">
+    <!-- data binding -->
+
+    <div class="card-header" [class.invisible]="!dataDidReceived">
+
+        <div class="col-xs-8">
+
+            <p> {{addressString}} </p>
+        </div>
+
+        <div class="col-xs-4 text-xs-right">
+
+            <h1 *ngIf="dataDidReceived" (click)="changeCurrentTempUnit()">{{weatherData.temp | tempUnit: currentTempUnit | number: '.0-0'}}&deg;</h1>
+            <!-- in order to remove the decimal point, we use Pipes.  0-0 min: 0 max: 0
+            
+             We will make a custom pipe that convert the km/h -> m/h-->
+        </div>
+
+    </div>
+
+    <div class="card-block">
+
+        <div id="indicator" [hidden] = "dataDidReceived">
+
+                <!-- for adding the indicator, we have to install the font.io css library just we did in the task project
+                    then in the index.html file we have to add the link to the installed css file.
+                 -->
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw" ></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+
+
+        <canvas id="iconId" [hidden] = "!dataDidReceived"></canvas>
+        <p>{{weatherData.summary}}</p>
+
+    </div>
+
+    <div class="card-footer" [class.invisible]="!dataDidReceived">
+        <div class="row">
+            <div class="col-xs-5">
+
+                <p>Wind</p>
+                <p (click)="changeWindSpeedUnit ()">{{weatherData.wind | speedUnit: currentSpeedUnit}}</p>
+                <!-- We will make a custom pipe that convert the km/h -> m/h -->
+            </div>
+
+
+            <div class="col-xs-5 offset-xs-2">
+
+                <p>Humidity</p>
+                <p>{{weatherData.humidity | percent}}</p>
+                <!-- again using pipes for percentahe, originaly it was 0.83 and now 83% -->
+            </div>
+
+            <div id="message">
+                <small class="text-muted">Click to switch between Units</small>
+            </div>
+
+    </div>
+
+    </div>
+</div>
